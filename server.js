@@ -1,5 +1,5 @@
 const express = require('express');
-const { db } = require('./db/db.json');
+//const { db } = require('./db/db.json');
 //const apiRoutes = require('./routes/apiRoutes');
 const htmlRoutes = require('./routes/htmlRoutes');
 
