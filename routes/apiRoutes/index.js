@@ -1,7 +1,9 @@
 const fs = require('fs');
-const path = require('path');
+const util = require('util');
 const router = require('express').Router();
 const db = require('../../db/db.json');
+
+const writeFileAsync = util.promisify(fs.writeFile);
 
 // API GET request
 router.get('/notes', (req, res) => {
@@ -17,7 +19,7 @@ router.post('/notes', (req, res) => {
 
     notes.push(note);
 
-    fs.writeFileSync('./db/db.json', JSON.stringify(notes));
+    writeFileAsync('./db/db.json', JSON.stringify(notes));
 
     res.json(db);
 });
@@ -25,11 +27,9 @@ router.post('/notes', (req, res) => {
 // API DELETE request
 router.delete('/notes/:id', (req, res) => {
     const delId = parseInt(req.params.id);
-    let notes = db;
-    
-    notes = notes.filter(note => note.id !== delId);
+    const keepNotes = db.filter(note => note.id !== delId);
 
-    fs.writeFileSync('./db/db.json', JSON.stringify(notes));
+    writeFileAsync('./db/db.json', JSON.stringify(keepNotes));
 
     res.json(db);
 });

@@ -1,7 +1,4 @@
 const express = require('express');
-const path = require('path');
-const fs = require('fs');
-const db = require('./db/db.json');
 
 const htmlRoutes = require('./routes/htmlRoutes');
 const apiRoutes = require('./routes/apiRoutes')
