@@ -25,18 +25,13 @@ router.post('/notes', (req, res) => {
 // API DELETE request
 router.delete('/notes/:id', (req, res) => {
     const delId = parseInt(req.params.id);
-    const notes = db;
-    const keepNotes = [];
+    let notes = db;
+    
+    notes = notes.filter(note => note.id !== delId);
 
-    notes.forEach(note => {
-        if(note.id !== delId) {
-            keepNotes.push(note);
-        }
-    });
+    fs.writeFileSync('./db/db.json', JSON.stringify(notes));
 
-    fs.writeFileSync('./db/db.json', JSON.stringify(keepNotes));
-
-    res.json(db)
+    res.json(db);
 });
 
 module.exports = router;
