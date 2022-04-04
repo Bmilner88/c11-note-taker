@@ -29,7 +29,9 @@ router.delete('/notes/:id', (req, res) => {
     const delId = parseInt(req.params.id);
     const keepNotes = db.filter(note => note.id !== delId);
 
-    writeFileAsync('./db/db.json', JSON.stringify(keepNotes));
+
+        writeFileAsync('./db/db.json', JSON.stringify(keepNotes))
+
 
     res.json(db);
 });
