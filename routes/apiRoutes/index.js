@@ -11,8 +11,7 @@ router.post('/notes', (req, res) => {
     const note = req.body;
     const notes = db;
     notes.push(note);
-    fs.writeFileSync('./db/db.json', JSON.stringify(notes));
-    console.log(notes)
+    fs.writeFileSync('./db/db.json', JSON.stringify(notes), 'utf-8');
     res.json(db);
 });
 
