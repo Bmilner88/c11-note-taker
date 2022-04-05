@@ -17,18 +17,22 @@ router.post('/notes', (req, res) => {
     notes.forEach(note => {
         idArr.push(note.id);
     });
-    console.log(idArr);
     
     note.id = uuid();
 
-    for(i = 0; i < idArr.length; i++) {
-        if(note.id !== idArr[i]) {
-            notes.push(note);
-            break;
-        } else {
-            note.id = uuid();
+    if(idArr.length) {
+        for(i = 0; i < idArr.length; i++) {
+            if(note.id !== idArr[i]) {
+                notes.push(note);
+                break;
+            } else {
+                note.id = uuid();
+            };
         };
+    } else {
+        notes.push(note);
     };
+    
 
     fs.writeFileSync('./db/db.json', JSON.stringify(notes, null, 2));
     
@@ -38,7 +42,6 @@ router.post('/notes', (req, res) => {
 // API DELETE request
 router.delete('/notes/:id', (req, res) => {
     const delId = req.params.id;
-    console.log(delId)
     const notes = JSON.parse(fs.readFileSync('./db/db.json', 'utf-8'));
     const keepNotes = [];
 
